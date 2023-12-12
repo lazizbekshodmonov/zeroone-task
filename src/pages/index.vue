@@ -1,56 +1,80 @@
 <script setup lang="ts">
-// defineOptions({
-//   name: 'IndexPage',
-// })
-const user = useUserStore()
-const name = ref(user.savedName)
-
-const router = useRouter()
-function go() {
-  if (name.value)
-    router.push(`/hi/${encodeURIComponent(name.value)}`)
+interface treeData {
+  name: string;
+  children?: treeData[];
+  childIndex?: number;
 }
+const treeData = ref<treeData[]>([
+  {
+    name: "Models",
+    children: [
+      {
+        name: "Data warehouse",
+        children: [{ name: "Report samples" }, { name: "Sales performance" }],
+      },
+    ],
+  },
+  {
+    name: "Statistics",
+    children: [{ name: "Element" }, { name: "Element" }],
+  },
+]);
 
-const { t } = useI18n()
+const tableColumns = ref([
+  {
+    label: "Name",
+    field: "name",
+  },
+  {
+    label: "Age",
+    field: "age",
+  },
+  {
+    label: "Address",
+    field: "address",
+  },
+  {
+    label: "Tags",
+    field: "tags",
+  },
+  {
+    label: "Action",
+    field: "action",
+  },
+]);
+const tableData = ref([
+  {
+    name: "Jhon Brown",
+    age: 32,
+    address: "New York No. 1 Lake Park",
+    tags: ["NICE", "DEVELOPER", ],
+    action: ["Invite", "Delete"]
+  },
+  {
+    name: "Jhon Brown",
+    age: 32,
+    address: "New York No. 1 Lake Park",
+    tags: ["LOSER", "COOL"],
+    action: ["Invite", "Delete"]
+  },
+  {
+    name: "Jhon Brown",
+    age: 32,
+    address: "New York No. 1 Lake Park",
+    tags: ['<h2>COOL</h2><div style="padding: 2px; background-color: aqua; border: 2px solid red; border-radius: 4px;">COOL</div>', "<h2>TEACHER</h2>"],
+    action: ['<h2 style="color: blue;">Invite</h2>', '<h2 style="color: blue;">Delete</h2>']
+  },
+]);
 </script>
 
 <template>
   <div>
-    <div text-4xl>
-      <div i-carbon-campsite inline-block />
-    </div>
-    <p>
-      <a rel="noreferrer" href="https://github.com/antfu/vitesse" target="_blank">
-        Vitesse
-      </a>
-    </p>
-    <p>
-      <em text-sm opacity-75>{{ t('intro.desc') }}</em>
-    </p>
-
-    <div py-4 />
-
-    <TheInput
-      v-model="name"
-      :placeholder="t('intro.whats-your-name')"
-      autocomplete="false"
-      @keydown.enter="go"
-    />
-    <label class="hidden" for="input">{{ t('intro.whats-your-name') }}</label>
-
-    <div>
-      <button
-        m-3 text-sm btn
-        :disabled="!name"
-        @click="go"
-      >
-        {{ t('button.go') }}
-      </button>
-    </div>
+    <v-tree-collapse :tree-data="treeData" />
+    <v-table :data="tableData" :columns="tableColumns" />
   </div>
 </template>
 
 <route lang="yaml">
 meta:
-  layout: home
+  layout: default
 </route>
