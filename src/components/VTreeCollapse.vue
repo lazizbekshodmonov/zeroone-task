@@ -1,11 +1,11 @@
 <script setup lang="ts">
-interface treeData {
+interface treeDatatype {
   name: string;
-  children?: treeData[];
+  children?: treeDatatype[];
 }
 const { treeData, childIndex } = withDefaults(
   defineProps<{
-    treeData?: treeData[];
+    treeData?: treeDatatype[];
     childIndex?: number;
   }>(),
   {

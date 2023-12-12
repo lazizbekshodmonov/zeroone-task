@@ -1,10 +1,10 @@
 <script setup lang="ts">
-interface treeData {
+interface treeDatatype {
   name: string;
-  children?: treeData[];
+  children?: treeDatatype[];
   childIndex?: number;
 }
-const treeData = ref<treeData[]>([
+const treeData = ref<treeDatatype[]>([
   {
     name: "Models",
     children: [
