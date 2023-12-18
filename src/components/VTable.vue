@@ -1,12 +1,11 @@
-
 <script setup lang="ts">
 defineProps<{
-  data: any;
+  data: any
   columns: {
-    label: string;
-    field: string;
-  }[];
-}>();
+    label: string
+    field: string
+  }[]
+}>()
 </script>
 
 <template>
@@ -16,7 +15,7 @@ defineProps<{
         <th
           v-for="(column, index) in columns"
           :key="index"
-          class="text-left py-4 min-w-[80px]"
+          class="min-w-[80px] py-4 text-left"
         >
           <div
             class="pl-4"
@@ -36,25 +35,26 @@ defineProps<{
         <td
           v-for="(column, cIndex) in columns"
           :key="cIndex"
-          text-left
-          pl-4
-          py-4
+
+          py-4 pl-4 text-left
         >
-          <div v-if="!(item[column.field] instanceof Array)">
-            {{ item[column.field] }}
+          <div flex>
+            <div
+              v-if="!(Array.isArray(item[column.field]))"
+              v-html="item[column.field]"
+            />
+            <div
+              v-for="(k, i) in item[column.field]"
+              v-else
+              :key="i"
+              v-html="k"
+            />
           </div>
-          <div
-            v-else
-            v-for="(k, i) in item[column.field]"
-            :key="i"
-            v-html="k"
-          ></div>
         </td>
       </tr>
     </tbody>
   </table>
 </template>
-
 
 <style scoped>
 </style>
