@@ -114,6 +114,7 @@ const tableData = ref([
     <v-tree-collapse :tree-data="treeData" />
     <v-table :data="tableData" :columns="tableColumns" />
   </div>
+  <the-footer/>
 </template>
 
 <route lang="yaml">
